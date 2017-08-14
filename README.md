@@ -24,12 +24,20 @@ cd ask-around-api
 # Install dependencies
 npm install
 
-# Start development live-reload server
-npm run dev
-
-# Start production server:
+# Start development (use `./kill.bat` if you're on windows and the port is occupied):
 npm start
 ```
+
+Create a `config.js` file in the `src` directory with the following template:
+
+```javascript
+{
+    "secret": "secret_string",
+    "database": "mongo url"
+}
+```
+
+
 Docker Support
 ------
 ```sh

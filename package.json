@@ -4,11 +4,7 @@
   "description": "This is the API for the Ask Around project.",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
-    "build": "babel src -s -D -d dist --presets es2015,stage-0",
-    "start": "node dist",
-    "prestart": "npm run -s build",
-    "test": "eslint src"
+    "start": "nodemon src/index.js"
   },
   "repository": "developit/express-es6-rest-api",
   "author": "Alexandru Florian Barascu <alex.florin235@yahoo.com>",
@@ -17,7 +13,12 @@
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
     "express-jwt": "^5.3.0",
-    "mongoose": "^4.11.6",
+    "jsonwebtoken": "^7.4.2",
+    "mongoose": "^4.10.8",
     "morgan": "^1.8.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.4.1",
+    "nodemon": "^1.11.0"
   }
 }
