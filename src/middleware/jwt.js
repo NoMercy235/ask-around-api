@@ -5,9 +5,9 @@ let jwtConfig = jwt({
     secret: config.secret,
     requestProperty: 'authorization',
     getToken: (req) => {
-        console.log(req.headers);
-        if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-            return req.headers.authorization.split(' ')[1];
+        let token = req.headers.authorization || req.headers.Authorization;
+        if (token && token.split(' ')[0] === 'Bearer') {
+            return token.split(' ')[1];
         }
         return null;
     }
