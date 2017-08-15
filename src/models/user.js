@@ -2,17 +2,20 @@ const MODEL = 'User';
 
 let mongoose = require('mongoose');
 let schema = new mongoose.Schema({
-    firstName: String,
-    lastName: String,
-    email: String,
-    password: String,
-    isAdmin: Boolean
+    firstName: { type: String, default: '' },
+    lastName: { type: String, default: '' },
+    email: { type: String, required: true, index: { unique: true } },
+    password: { type: String, required: true },
+    isAdmin: { type: Boolean, default: false }
 });
 
-schema.methods.isValid = function (cb) {
-    return !!(this.email && this.password);
-};
+schema.path('email').validate(function (value, done) {
+    this.model(MODEL).count({ email: value }, (err, count) => {
+        if (err) {
+            return done(err);
+        }
+        done(!count);
+    })
+}, 'Email already exists');
 
-let model = mongoose.model(MODEL, schema);
-
-module.exports = model;
+module.exports = mongoose.model(MODEL, schema);
