@@ -4,11 +4,15 @@ let bodyParser = require('body-parser');
 let morgan = require('morgan');
 let mongoose = require('mongoose');
 
-let config = require('./config'); // get our config file
-let jwtConfig = require('./middleware/jwt'); // used to create, sign, and verify tokens
+let config = require('./config');
+let jwtConfig = require('./middleware/jwt');
 
-let port = process.env.PORT || 8080; // used to create, sign, and verify tokens
-mongoose.connect(config.database); // connect to database
+let port = process.env.PORT || 8080;
+
+// Overriding the deprecated "Promise" module of mongoose.
+// For more information see: https://github.com/Automattic/mongoose/issues/4291
+mongoose.Promise = global.Promise;
+mongoose.connect(config.database);
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -17,12 +21,11 @@ app.use(morgan('dev'));
 
 app.use(jwtConfig);
 
-let routes = require('./api');
-for (let key in routes) {
-    if (routes.hasOwnProperty(key)) {
-        app.use('/api', routes[key])
+let apiRoutes = require('./api').routes;
+for (let key in apiRoutes) {
+    if (apiRoutes.hasOwnProperty(key)) {
+        app.use('/api' + apiRoutes[key].prefix, apiRoutes[key].routes)
     }
 }
 
 app.listen(port);
-console.log('Magic happens at http://localhost:' + port);

@@ -6,6 +6,7 @@ let controller = require('./auth.controller');
 // TODO: route middleware to verify a token
 
 router.post('/authenticate', controller.authenticate);
+router.post('/register', controller.register);
 
 module.exports = router;
 

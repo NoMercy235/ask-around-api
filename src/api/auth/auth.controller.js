@@ -27,4 +27,17 @@ controller.authenticate = (req, res) => {
     });
 };
 
+controller.register = (req, res) => {
+    let user = User(req.body);
+    if (!user.isValid()) {
+        res.status(401).send({ message: 'Bad parameters' });
+        return;
+    }
+    user.save((err) => {
+        if (err) throw err;
+        console.log('User saved successfully');
+        res.json(user).end();
+    });
+};
+
 module.exports = controller;

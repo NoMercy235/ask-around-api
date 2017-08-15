@@ -1,4 +1,6 @@
 module.exports = {
-    userRoutes: require('./user/user.routes'),
-    authRoutes: require('./auth/auth.routes')
+    routes: {
+        user: { prefix: '/user', routes: require('./user/user.routes') },
+        auth: { prefix: '/auth', routes: require('./auth/auth.routes') },
+    }
 };

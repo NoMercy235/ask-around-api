@@ -11,6 +11,6 @@ let jwtConfig = jwt({
         }
         return null;
     }
-}).unless({path: ['/api/authenticate']});
+}).unless({path: ['/api/', /\/auth.+$/g]});
 
 module.exports = jwtConfig;
