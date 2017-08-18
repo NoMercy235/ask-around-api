@@ -1,10 +1,6 @@
 let User = require('../../models/user');
 let controller = {};
 
-controller.getBase = (req, res) => {
-    res.json({ message: 'Welcome to the coolest API on earth!' });
-};
-
 controller.getUsers = (req, res) => {
     User.find({}, function(err, users) {
         res.json(users);

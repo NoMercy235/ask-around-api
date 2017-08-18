@@ -13,4 +13,7 @@ let jwtConfig = jwt({
     }
 }).unless({path: ['/api/', /\/auth.+$/g]});
 
-module.exports = jwtConfig;
+module.exports = (() => {
+    console.warn('The jwt.js module is deprecated');
+    return jwtConfig;
+})();

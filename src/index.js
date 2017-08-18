@@ -5,7 +5,7 @@ let morgan = require('morgan');
 let mongoose = require('mongoose');
 
 let config = require('./config');
-let jwtConfig = require('./middleware/jwt');
+let passportConfig = require('./middleware/passport');
 
 let port = process.env.PORT || 8080;
 
@@ -19,12 +19,13 @@ app.use(bodyParser.json());
 
 app.use(morgan('dev'));
 
-app.use(jwtConfig);
+app.use(passportConfig.passport.initialize());
+app.use(passportConfig.prefix, passportConfig.passport.authenticate('jwt', { session: false }));
 
 let apiRoutes = require('./api').routes;
 for (let key in apiRoutes) {
     if (apiRoutes.hasOwnProperty(key)) {
-        app.use('/api' + apiRoutes[key].prefix, apiRoutes[key].routes)
+        app.use(apiRoutes[key].prefix, apiRoutes[key].routes)
     }
 }
 
