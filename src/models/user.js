@@ -9,7 +9,7 @@ let schema = new mongoose.Schema({
     isAdmin: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
 
-    questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question', unique: true }]
+    questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }]
 });
 let bcrypt = require('bcrypt');
 let SALT_WORK_FACTOR = 10;
@@ -28,14 +28,34 @@ schema.methods.comparePassword = function (candidatePassword) {
     return bcrypt.compareSync(candidatePassword, this.password);
 };
 
-schema.path('email').validate(function (value, done) {
-    if (this._id) done();
-    this.model(MODEL).count({ email: value }, (err, count) => {
-        if (err) {
-            return done(err);
+schema.methods.updateFields = function (fields) {
+    // Deleting the password to prevent updating the hash on user update.
+    // There will be a separate API call for password update.
+    if (fields['password']) delete fields['password'];
+
+    for (let key in fields) {
+        if (fields.hasOwnProperty(key)) {
+            this[key] = fields[key];
         }
-        done(!count);
-    })
-}, 'Email already exists');
+    }
+};
+
+schema.path('email').validate({
+    isAsync: true,
+    validator: function (value, done) {
+        if (this._id) done();
+        this.model(MODEL).count({ email: value }, (err, count) => {
+            if (err) {
+                return done(err);
+            }
+            done(!count);
+        })
+    },
+    message: 'Email already exists',
+});
+
+schema.path('password').validate(function (value) {
+    return value && value.length >= 6;
+}, 'Password must be have at least 6 characters');
 
 module.exports = mongoose.model(MODEL, schema);
