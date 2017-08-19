@@ -6,7 +6,8 @@ let schema = new mongoose.Schema({
     lastName: { type: String, default: '' },
     email: { type: String, required: true, index: { unique: true } },
     password: { type: String, required: true },
-    isAdmin: { type: Boolean, default: false }
+    isAdmin: { type: Boolean, default: false },
+    isActive: { type: Boolean, default: true },
 });
 let bcrypt = require('bcrypt');
 let SALT_WORK_FACTOR = 10;

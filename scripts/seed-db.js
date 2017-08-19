@@ -15,7 +15,8 @@ let admin = new User({
     lastName: 'askaround',
     email: 'admin@askaround.com',
     password: '123456',
-    isAdmin: true
+    isAdmin: true,
+    isActive: true,
 });
 admin.save();
 
