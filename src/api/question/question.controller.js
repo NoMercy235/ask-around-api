@@ -10,14 +10,14 @@ const findByCb = function (req) {
 const questionController = new BaseController(Question, findByCb);
 
 questionController.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_CREATE].push((res, item) => {
-    User.findOne({ _id: item._creator }, (err, user) => {
-        if (err) {
-            res.status(constants.HTTP_CODES.BAD_REQUEST).send(err);
-            return;
-        }
+    User.findOne({ _id: item._creator }).exec().then((user) => {
         user.questions.push(item);
-        user.save();
-    })
+        user.save().catch((err) => {
+            res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
+        });
+    }).catch((err) => {
+        res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
+    });
 });
 
 questionController.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET_ONE].push((query) => {

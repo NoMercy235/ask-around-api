@@ -1,11 +1,10 @@
 const constants = require('./constants');
 
-function exists (res, item) {
+function checkIfExists (res, item) {
     if (!item) {
         res.status(constants.HTTP_CODES.NOT_FOUND).send();
-        return false
+        throw new Error('Not Found');
     }
-    return true;
 }
 
 function initCallbacks () {
@@ -29,13 +28,11 @@ class BaseController {
         return (req, res) => {
             let query = this.Resource.find({});
             this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET].map(cb => cb(query));
-            query.exec().then((err, items) => {
-                if (err) {
-                    res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).send(err);
-                    return;
-                }
+            query.exec().then((items) => {
                 this.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_GET].map(cb => cb(res, items));
                 res.json(items);
+            }).catch((err) => {
+                res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
             });
         }
     }
@@ -44,14 +41,12 @@ class BaseController {
         return (req, res) => {
             let query = this.Resource.findOne(this.findByCb(req));
             this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET_ONE].map(cb => cb(query));
-            query.exec().then((err, item) => {
-                if (err) {
-                    res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
-                    return;
-                }
-                if (!exists(res, item)) return;
+            query.exec().then((item) => {
+                checkIfExists(res, item);
                 this.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_GET_ONE].map(cb => cb(res, item));
                 res.json(item);
+            }).catch((err) => {
+                res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
             });
         }
     }
@@ -60,31 +55,30 @@ class BaseController {
         return (req, res) => {
             let item = this.Resource(req.body);
             this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_CREATE].map(cb => cb(item));
-            item.save((err, item) => {
-                if (err) {
-                    res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
-                    return;
-                }
+            item.save().then((item) => {
                 this.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_CREATE].map(cb => cb(res, item));
                 res.json(item);
+            }).catch((err) => {
+                res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
             });
         }
     }
 
-    update (userOptions) {
-        let options = userOptions || { new: true };
-
+    update () {
         return (req, res) => {
-            let query = this.Resource.findOneAndUpdate(this.findByCb(req), req.body, options);
+            let query = this.Resource.findOne(this.findByCb(req));
             this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_UPDATE].map(cb => cb(query));
-            query.exec().then((err, item) => {
-                if (err) {
+            query.exec().then((item) => {
+                checkIfExists(res, item);
+                item.updateFields(req.body);
+                item.save().then((item) => {
+                    this.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_UPDATE].map(cb => cb(res, item));
+                    res.status(constants.HTTP_CODES.OK).json(item);
+                }).catch((err) => {
                     res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
-                    return;
-                }
-                if (!this._exists(res, item)) return;
-                this.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_UPDATE].map(cb => cb(res, item));
-                res.status(constants.HTTP_CODES.OK).json(item);
+                });
+            }).catch((err) => {
+                res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
             });
         }
     }
@@ -96,13 +90,11 @@ class BaseController {
             let query = this.Resource.findOneAndRemove(this.findByCb(req), options);
             this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_REMOVE].map(cb => cb(query));
             query.exec().then((err, item) => {
-                if (err) {
-                    res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
-                    return;
-                }
-                if (!this._exists(res, item)) return;
+                checkIfExists(res, item);
                 this.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_REMOVE].map(cb => cb(res, item));
                 res.status(constants.HTTP_CODES.OK).json(item);
+            }).catch((err) => {
+                res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
             });
         }
     }
