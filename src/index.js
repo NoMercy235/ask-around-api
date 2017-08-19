@@ -12,7 +12,8 @@ let port = process.env.PORT || 8080;
 // Overriding the deprecated "Promise" module of mongoose.
 // For more information see: https://github.com/Automattic/mongoose/issues/4291
 mongoose.Promise = global.Promise;
-mongoose.connect(config.database);
+// Providing the 'useMongoClient' property to get rid of the deprecated message.
+mongoose.connect(config.database, { useMongoClient: true, keepAlive: true });
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
