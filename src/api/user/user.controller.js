@@ -1,26 +1,21 @@
+let BaseController = require('../common/base.controller');
 let User = require('../../models/user');
-let controller = {};
+let constants = require('../common/constants');
 
-controller.getUsers = (req, res) => {
-    User.find({}, function(err, users) {
-        res.json(users);
-    });
+const findByCb = function (req) {
+    return { email: req.params.email }
 };
 
-controller.saveUser = (req, res) => {
-    let nick = new User({
-        firstName: 'Nick',
-        lastName: 'Mihale',
-        email: 'nick@seinternal.com',
-        password: 'mypass',
-        isAdmin: true
-    });
+const userController = new BaseController(User, findByCb);
 
-    nick.save((err) => {
-        if (err) throw err;
-        console.log('User saved successfully');
-        res.json(nick);
-    });
+userController.events.on(constants.HTTP_TIMED_EVENTS.BEFORE_GET, () => {
+    console.log('before get');
+});
+
+module.exports = {
+    get: userController.get(),
+    getOne: userController.getOne(),
+    create: userController.create(),
+    update: userController.update(),
+    remove: userController.remove(),
 };
-
-module.exports = controller;
