@@ -8,10 +8,6 @@ const findByCb = function (req) {
 
 const userController = new BaseController(User, findByCb);
 
-userController.events.on(constants.HTTP_TIMED_EVENTS.BEFORE_GET, () => {
-    console.log('before get');
-});
-
 module.exports = {
     get: userController.get(),
     getOne: userController.getOne(),

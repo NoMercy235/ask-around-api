@@ -8,6 +8,8 @@ let schema = new mongoose.Schema({
     password: { type: String, required: true },
     isAdmin: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
+
+    questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }]
 });
 let bcrypt = require('bcrypt');
 let SALT_WORK_FACTOR = 10;
@@ -27,6 +29,7 @@ schema.methods.comparePassword = function (candidatePassword) {
 };
 
 schema.path('email').validate(function (value, done) {
+    if (this._id) done();
     this.model(MODEL).count({ email: value }, (err, count) => {
         if (err) {
             return done(err);
