@@ -10,7 +10,7 @@ controller.authenticate = (req, res) => {
         email: req.body.email
     }, (err, user) => {
         if (err) throw err;
-        if (!user || (user.password !== req.body.password)) {
+        if (!user || !user.comparePassword(req.body.password)) {
             res.status(401).send({ message: 'Authentication failed' });
         } else if (user) {
             let token = jwt.sign({ email: user.email }, config.secret, {

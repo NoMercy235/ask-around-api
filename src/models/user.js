@@ -8,6 +8,22 @@ let schema = new mongoose.Schema({
     password: { type: String, required: true },
     isAdmin: { type: Boolean, default: false }
 });
+let bcrypt = require('bcrypt');
+let SALT_WORK_FACTOR = 10;
+
+schema.pre('save', function (next) {
+    if (!this.isModified('password')) return next();
+    try {
+        this.password = bcrypt.hashSync(this.password, SALT_WORK_FACTOR);
+        next();
+    } catch (err) {
+        next(err);
+    }
+});
+
+schema.methods.comparePassword = function (candidatePassword) {
+    return bcrypt.compareSync(candidatePassword, this.password);
+};
 
 schema.path('email').validate(function (value, done) {
     this.model(MODEL).count({ email: value }, (err, count) => {
