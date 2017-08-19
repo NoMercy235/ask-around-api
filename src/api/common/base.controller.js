@@ -46,7 +46,7 @@ class BaseController {
             this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET_ONE].map(cb => cb(query));
             query.exec().then((err, item) => {
                 if (err) {
-                    res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).send(err);
+                    res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
                     return;
                 }
                 if (!exists(res, item)) return;
@@ -62,7 +62,7 @@ class BaseController {
             this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_CREATE].map(cb => cb(item));
             item.save((err, item) => {
                 if (err) {
-                    res.status(constants.HTTP_CODES.BAD_REQUEST).send(err);
+                    res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
                     return;
                 }
                 this.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_CREATE].map(cb => cb(res, item));
@@ -79,12 +79,12 @@ class BaseController {
             this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_UPDATE].map(cb => cb(query));
             query.exec().then((err, item) => {
                 if (err) {
-                    res.status(constants.HTTP_CODES.BAD_REQUEST).send(err);
+                    res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
                     return;
                 }
                 if (!this._exists(res, item)) return;
                 this.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_UPDATE].map(cb => cb(res, item));
-                res.status(constants.HTTP_CODES.OK).send(item);
+                res.status(constants.HTTP_CODES.OK).json(item);
             });
         }
     }
@@ -97,12 +97,12 @@ class BaseController {
             this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_REMOVE].map(cb => cb(query));
             query.exec().then((err, item) => {
                 if (err) {
-                    res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).send(err);
+                    res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
                     return;
                 }
                 if (!this._exists(res, item)) return;
                 this.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_REMOVE].map(cb => cb(res, item));
-                res.status(constants.HTTP_CODES.OK).send(item);
+                res.status(constants.HTTP_CODES.OK).json(item);
             });
         }
     }
