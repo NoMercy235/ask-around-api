@@ -27,8 +27,9 @@ class BaseController {
 
     get () {
         return (req, res) => {
-            this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET].map(cb => cb());
-            this.Resource.find({}, (err, items) => {
+            let query = this.Resource.find({});
+            this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET].map(cb => cb(query));
+            query.exec().then((err, items) => {
                 if (err) {
                     res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).send(err);
                     return;
@@ -41,8 +42,9 @@ class BaseController {
 
     getOne () {
         return (req, res) => {
-            this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET_ONE].map(cb => cb());
-            this.Resource.findOne(this.findByCb(req), (err, item) => {
+            let query = this.Resource.findOne(this.findByCb(req));
+            this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET_ONE].map(cb => cb(query));
+            query.exec().then((err, item) => {
                 if (err) {
                     res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).send(err);
                     return;
@@ -56,8 +58,8 @@ class BaseController {
 
     create () {
         return (req, res) => {
-            this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_CREATE].map(cb => cb());
             let item = this.Resource(req.body);
+            this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_CREATE].map(cb => cb(item));
             item.save((err, item) => {
                 if (err) {
                     res.status(constants.HTTP_CODES.BAD_REQUEST).send(err);
@@ -73,8 +75,9 @@ class BaseController {
         let options = userOptions || { new: true };
 
         return (req, res) => {
-            this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_UPDATE].map(cb => cb());
-            this.Resource.findOneAndUpdate(this.findByCb(req), req.body, options, (err, item) => {
+            let query = this.Resource.findOneAndUpdate(this.findByCb(req), req.body, options);
+            this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_UPDATE].map(cb => cb(query));
+            query.exec().then((err, item) => {
                 if (err) {
                     res.status(constants.HTTP_CODES.BAD_REQUEST).send(err);
                     return;
@@ -86,10 +89,13 @@ class BaseController {
         }
     }
 
-    remove () {
+    remove (userOptions) {
+        let options = userOptions || {};
+
         return (req, res) => {
-            this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_REMOVE].map(cb => cb());
-            this.Resource.findOneAndRemove(this.findByCb(req), {}, (err, item) => {
+            let query = this.Resource.findOneAndRemove(this.findByCb(req), options);
+            this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_REMOVE].map(cb => cb(query));
+            query.exec().then((err, item) => {
                 if (err) {
                     res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).send(err);
                     return;

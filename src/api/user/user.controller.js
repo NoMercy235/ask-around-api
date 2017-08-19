@@ -8,6 +8,10 @@ const findByCb = function (req) {
 
 const userController = new BaseController(User, findByCb);
 
+userController.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET_ONE].push((query) => {
+    query.populate('questions');
+});
+
 module.exports = {
     get: userController.get(),
     getOne: userController.getOne(),

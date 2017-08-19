@@ -20,6 +20,10 @@ questionController.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_CREATE].push((res
     })
 });
 
+questionController.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET_ONE].push((query) => {
+    query.populate({ path: '_creator', select: ['email', 'firstName', 'lastName'] }) ;
+});
+
 module.exports = {
     get: questionController.get(),
     getOne: questionController.getOne(),

@@ -9,7 +9,7 @@ let schema = new mongoose.Schema({
     isAdmin: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
 
-    questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }]
+    questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question', unique: true }]
 });
 let bcrypt = require('bcrypt');
 let SALT_WORK_FACTOR = 10;
