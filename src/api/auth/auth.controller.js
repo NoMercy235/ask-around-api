@@ -1,7 +1,7 @@
 let jwt = require('jsonwebtoken');
 let User = require('../../models/user');
 let config = require('../../config');
-let Utils = require('../../lib/utils');
+let constants = require('../common/constants');
 
 let controller = {};
 
@@ -30,7 +30,7 @@ controller.register = (req, res) => {
     let user = User(req.body);
     user.save((err) => {
         if (err) {
-            Utils.sendErrorResponse(res, err.errors, 'Bad parameters');
+            res.status(constants.HTTP_CODES.BAD_REQUEST).send(err);
         } else {
             res.json(user);
         }
