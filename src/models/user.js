@@ -15,7 +15,10 @@ let bcrypt = require('bcrypt');
 let SALT_WORK_FACTOR = 10;
 
 schema.pre('save', function (next) {
-    if (!this.isModified('password')) return next();
+    if (!this.isModified('password')) {
+        console.log('called next because password is not modified');
+        return next();
+    }
     try {
         this.password = bcrypt.hashSync(this.password, SALT_WORK_FACTOR);
         next();
@@ -28,16 +31,21 @@ schema.methods.comparePassword = function (candidatePassword) {
     return bcrypt.compareSync(candidatePassword, this.password);
 };
 
-schema.methods.updateFields = function (fields) {
+schema.statics.updateFields = function (fields) {
     // Deleting the password to prevent updating the hash on user update.
     // There will be a separate API call for password update.
     if (fields['password']) delete fields['password'];
 
+    // TODO: check how to ignore fields which shouldn't be updated
+    if (fields['email']) delete fields['email'];
+
+    let res = {};
     for (let key in fields) {
         if (fields.hasOwnProperty(key)) {
-            this[key] = fields[key];
+            res[key] = fields[key];
         }
     }
+    return res;
 };
 
 schema.path('email').validate({
