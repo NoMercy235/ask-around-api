@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/index.js"
   },
-  "repository": "developit/express-es6-rest-api",
+  "repository": "https://github.com/NoMercy235/ask-around-api",
   "author": "Alexandru Florian Barascu <alex.florin235@yahoo.com>",
   "license": "MIT",
   "dependencies": {
