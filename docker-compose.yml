@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+    ask-around:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "3000:8080"
+        networks:
+            - ask-around-network
+    mongodb:
+        image: mongo
+        networks:
+            - ask-around-network
+
+networks:
+    ask-around-network:
+        driver: bridge
