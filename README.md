@@ -41,7 +41,7 @@ Create a `config.js` file in the `src` directory with the following template:
 Docker Support
 ------
 ```sh
-cd express-es6-rest-api
+cd ask-around-api
 
 # Build your docker
 docker build -t ask-around .
@@ -54,6 +54,19 @@ docker run -p 8080:8080 ask-around
 #          bind the port    container tag
 #          to your host
 #          machine port   
+
+```
+
+Or you can use `docker-compose` in order to spin up both the app and the mongo db and create a network with the two of them:
+
+```sh
+cd ask-around-api
+
+docker-compose build
+docker-compose up -d
+
+# For shutdown and cleanup
+docker-compose down
 
 ```
 
