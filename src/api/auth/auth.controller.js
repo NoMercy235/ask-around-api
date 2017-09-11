@@ -1,5 +1,5 @@
 let jwt = require('jsonwebtoken');
-let User = require('../../models/user');
+let User = require('../../models/user').model;
 let config = require('../../config');
 let constants = require('../common/constants');
 

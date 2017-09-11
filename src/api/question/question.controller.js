@@ -1,6 +1,6 @@
 let BaseController = require('../common/base.controller');
-let Question = require('../../models/question');
-let User = require('../../models/user');
+let Question = require('../../models/question').model;
+let User = require('../../models/user').model;
 let constants = require('../common/constants');
 
 const findByCb = function (req) {

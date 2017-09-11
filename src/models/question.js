@@ -1,10 +1,11 @@
 let moment = require('moment');
+let USER = require('./user').key;
 
 const MODEL = 'Question';
 
 let mongoose = require('mongoose');
 let schema = new mongoose.Schema({
-    _creator: { type: String, ref: 'User' },
+    _creator: { type: String, ref: USER },
     title: { type: String, required: true },
     content: { type: String, required: true },
     created_at: { type: Date },
@@ -15,4 +16,7 @@ schema.pre('save', function (next) {
     next();
 });
 
-module.exports = mongoose.model(MODEL, schema);
+module.exports = {
+    model: mongoose.model(MODEL, schema),
+    key: MODEL
+};

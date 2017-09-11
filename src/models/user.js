@@ -66,4 +66,7 @@ schema.path('password').validate(function (value) {
     return value && value.length >= 6;
 }, 'Password must be have at least 6 characters');
 
-module.exports = mongoose.model(MODEL, schema);
+module.exports = {
+    model: mongoose.model(MODEL, schema),
+    key: MODEL
+};

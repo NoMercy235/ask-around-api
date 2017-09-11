@@ -1,7 +1,7 @@
 let passport = require('passport');
 let passportJWT = require('passport-jwt');
 
-let User = require('../models/user');
+let User = require('../models/user').model;
 let config = require('../config');
 
 let ExtractJwt = passportJWT.ExtractJwt;
