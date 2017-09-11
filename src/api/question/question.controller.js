@@ -1,6 +1,7 @@
 let BaseController = require('../common/base.controller');
 let Question = require('../../models/question').model;
 let User = require('../../models/user').model;
+let Category = require('../../models/category').model;
 let constants = require('../common/constants');
 
 const findByCb = function (req) {
@@ -18,10 +19,25 @@ questionController.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_CREATE].push((res
     }).catch((err) => {
         res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
     });
+
+    item.categories.map((category) => {
+        Category.findOne({ _id: category}).exec().then((category) => {
+            category.questions.push(item);
+            category.save().catch((err) => {
+                res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
+            });
+        }).catch((err) => {
+            res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
+        });
+    })
 });
 
 questionController.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET_ONE].push((query) => {
-    query.populate({ path: '_creator', select: ['email', 'firstName', 'lastName'] }) ;
+    query.populate({ path: '_creator', select: [ 'email', 'firstName', 'lastName' ] });
+});
+
+questionController.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET].push((query) => {
+    query.populate({ path: 'categories', select: [ 'name' ] });
 });
 
 module.exports = {

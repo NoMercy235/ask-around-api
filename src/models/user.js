@@ -1,4 +1,9 @@
+let bcrypt = require('bcrypt');
+let QUESTION = require('./question').key;
+
 const MODEL = 'User';
+
+let SALT_WORK_FACTOR = 10;
 
 let mongoose = require('mongoose');
 let schema = new mongoose.Schema({
@@ -9,10 +14,8 @@ let schema = new mongoose.Schema({
     isAdmin: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
 
-    questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }]
+    questions: [{ type: mongoose.Schema.Types.ObjectId, ref: QUESTION }],
 });
-let bcrypt = require('bcrypt');
-let SALT_WORK_FACTOR = 10;
 
 schema.pre('save', function (next) {
     if (!this.isModified('password')) {

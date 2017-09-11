@@ -1,14 +1,17 @@
 let moment = require('moment');
 let USER = require('./user').key;
+let CATEGORY = require('./category').key;
 
 const MODEL = 'Question';
 
 let mongoose = require('mongoose');
 let schema = new mongoose.Schema({
-    _creator: { type: String, ref: USER },
     title: { type: String, required: true },
     content: { type: String, required: true },
     created_at: { type: Date },
+
+    _creator: { type: String, ref: USER },
+    categories: [{ type: mongoose.Schema.Types.ObjectId, ref: CATEGORY }],
 });
 
 schema.pre('save', function (next) {
