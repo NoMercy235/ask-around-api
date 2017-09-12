@@ -55,7 +55,7 @@ class BaseController {
     create () {
         return (req, res) => {
             let item = this.Resource(req.body);
-            this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_CREATE].map(cb => cb(item));
+            this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_CREATE].map(cb => cb(req, item));
             item.save().then((item) => {
                 this.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_CREATE].map(cb => cb(res, item));
                 res.json(item);

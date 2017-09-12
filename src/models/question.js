@@ -1,6 +1,7 @@
 let moment = require('moment');
 let USER = require('./user').key;
 let CATEGORY = require('./category').key;
+let QUESTION_SCORE = require('./question-score').key;
 
 const MODEL = 'Question';
 
@@ -12,6 +13,7 @@ let schema = new mongoose.Schema({
 
     _creator: { type: String, ref: USER },
     categories: [{ type: mongoose.Schema.Types.ObjectId, ref: CATEGORY }],
+    scores: [{ type: mongoose.Schema.Types.ObjectId, ref: QUESTION_SCORE }],
 });
 
 schema.pre('save', function (next) {

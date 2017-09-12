@@ -4,5 +4,6 @@ module.exports = {
         user: { prefix: '/api/user', routes: require('./user/user.routes') },
         question: { prefix: '/api/question', routes: require('./question/question.routes') },
         category: { prefix: '/api/category', routes: require('./category/category.routes') },
+        score: { prefix: '/api/score', routes: require('./question/question-scores.routes') },
     }
 };
