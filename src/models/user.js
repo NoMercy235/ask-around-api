@@ -1,12 +1,12 @@
-let bcrypt = require('bcrypt');
-let QUESTION = require('./question').key;
+const bcrypt = require('bcrypt');
+const MODEL_NAMES = require('./model-names');
+const QUESTION = MODEL_NAMES.question;
+const MODEL = MODEL_NAMES.user;
 
-const MODEL = 'User';
+const SALT_WORK_FACTOR = 10;
 
-let SALT_WORK_FACTOR = 10;
-
-let mongoose = require('mongoose');
-let schema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const schema = new mongoose.Schema({
     firstName: { type: String, default: '' },
     lastName: { type: String, default: '' },
     email: { type: String, required: true, index: { unique: true } },

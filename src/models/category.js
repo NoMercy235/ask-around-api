@@ -1,9 +1,9 @@
-let QUESTION = require('./question').key;
+const MODEL_NAMES = require('./model-names');
+const QUESTION = MODEL_NAMES.question;
+const MODEL = MODEL_NAMES.category;
 
-const MODEL = 'Category';
-
-let mongoose = require('mongoose');
-let schema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const schema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String },
 

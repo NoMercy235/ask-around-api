@@ -1,12 +1,12 @@
-let moment = require('moment');
-let USER = require('./user').key;
-let CATEGORY = require('./category').key;
-let QUESTION_SCORE = require('./question-score').key;
+const moment = require('moment');
+const MODEL_NAMES = require('./model-names');
+const USER = MODEL_NAMES.user;
+const CATEGORY = MODEL_NAMES.category;
+const QUESTION_SCORE = MODEL_NAMES.questionScore;
+const MODEL = MODEL_NAMES.question;
 
-const MODEL = 'Question';
-
-let mongoose = require('mongoose');
-let schema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const schema = new mongoose.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
     created_at: { type: Date },
