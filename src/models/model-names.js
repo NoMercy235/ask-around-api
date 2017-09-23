@@ -3,4 +3,5 @@ module.exports = {
     question: 'Question',
     category: 'Category',
     questionScore: 'QuestionScore',
+    userPreference: 'UserPreference',
 };

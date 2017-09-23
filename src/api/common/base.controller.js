@@ -69,7 +69,7 @@ class BaseController {
         let options = userOptions || { new: true, runValidators: true };
 
         return (req, res) => {
-            let updateFields = this.Resource.updateFields(req.body);
+            let updateFields = this.Resource.updateFields ? this.Resource.updateFields(req.body) : req.body;
             let query = this.Resource.findOneAndUpdate(this.findByCb(req), { $set: updateFields }, options);
 
             this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_UPDATE].map(cb => cb(query));

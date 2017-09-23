@@ -12,7 +12,6 @@ const questionScoresController = new BaseController(QuestionScore, findByCb);
 questionScoresController.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_CREATE].push((req, item) => {
     item.user = req.params.user;
     item.question = req.params.question;
-    console.log(item);
 });
 
 questionScoresController.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_CREATE].push((res, item) => {
