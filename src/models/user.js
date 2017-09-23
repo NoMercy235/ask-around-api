@@ -43,13 +43,7 @@ schema.statics.updateFields = function (fields) {
     // TODO: check how to ignore fields which shouldn't be updated
     if (fields['email']) delete fields['email'];
 
-    let res = {};
-    for (let key in fields) {
-        if (fields.hasOwnProperty(key)) {
-            res[key] = fields[key];
-        }
-    }
-    return res;
+    return fields;
 };
 
 schema.path('email').validate({
