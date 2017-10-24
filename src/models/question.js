@@ -7,21 +7,20 @@ const REPLY = MODEL_NAMES.reply;
 const MODEL = MODEL_NAMES.question;
 
 const mongoose = require('mongoose');
-const schema = new mongoose.Schema({
-    title: { type: String, required: true },
-    content: { type: String, required: true },
-    created_at: { type: Date },
+const schema = new mongoose.Schema(
+    {
+        title: { type: String, required: true },
+        content: { type: String, required: true },
 
-    _creator: { type: String, ref: USER },
-    categories: [{ type: mongoose.Schema.Types.ObjectId, ref: CATEGORY }],
-    scores: [{ type: mongoose.Schema.Types.ObjectId, ref: QUESTION_SCORE }],
-    replies: [{ type: mongoose.Schema.Types.ObjectId, ref: REPLY }],
-});
-
-schema.pre('save', function (next) {
-    if (!this.created_at) this.created_at = moment().format();
-    next();
-});
+        _creator: { type: String, ref: USER },
+        categories: [{ type: mongoose.Schema.Types.ObjectId, ref: CATEGORY }],
+        scores: [{ type: mongoose.Schema.Types.ObjectId, ref: QUESTION_SCORE }],
+        replies: [{ type: mongoose.Schema.Types.ObjectId, ref: REPLY }],
+    },
+    {
+        timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
+    }
+);
 
 module.exports = {
     model: mongoose.model(MODEL, schema),

@@ -3,7 +3,8 @@ const USER = MODEL_NAMES.user;
 const MODEL = MODEL_NAMES.categorySearch;
 
 const mongoose = require('mongoose');
-const schema = new mongoose.Schema({
+const schema = new mongoose.Schema(
+    {
         query: { type: String, required: true },
         times: { type: Number, required: true },
 

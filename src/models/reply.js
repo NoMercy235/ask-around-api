@@ -4,7 +4,8 @@ const QUESTION = MODEL_NAMES.question;
 const MODEL = MODEL_NAMES.reply;
 
 const mongoose = require('mongoose');
-const schema = new mongoose.Schema({
+const schema = new mongoose.Schema(
+    {
         message: { type: String },
 
         user: { type: String, ref: USER },

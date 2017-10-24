@@ -4,7 +4,8 @@ const CATEGORY = MODEL_NAMES.category;
 const MODEL = MODEL_NAMES.categorySearch;
 
 const mongoose = require('mongoose');
-const schema = new mongoose.Schema({
+const schema = new mongoose.Schema(
+    {
         times: { type: Number, required: true },
 
         user: { type: String, ref: USER, required: true },
