@@ -1,5 +1,5 @@
-let router = require('express').Router();
-let controller = require('./categories.controller');
+const router = require('express').Router();
+const controller = require('./categories.controller');
 
 router.get('/', controller.get);
 router.post('/', controller.create);

@@ -1,5 +1,5 @@
-let router = require('express').Router();
-let controller = require('./question-scores.controller');
+const router = require('express').Router();
+const controller = require('./question-scores.controller');
 
 router.get('/:user/:question', controller.get);
 router.post('/:user/:question', controller.create);

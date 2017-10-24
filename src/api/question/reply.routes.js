@@ -1,5 +1,5 @@
-let router = require('express').Router();
-let controller = require('./reply.controller');
+const router = require('express').Router();
+const controller = require('./reply.controller');
 
 // We should never allow any operation other than create and delete.
 router.post('/:user/:question', controller.create);
