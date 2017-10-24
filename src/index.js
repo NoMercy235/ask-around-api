@@ -24,6 +24,8 @@ app.use(passportConfig.passport.initialize());
 app.use(passportConfig.prefix, passportConfig.passport.authenticate('jwt', { session: false }));
 
 let apiRoutes = require('./api').routes;
-Object.keys(apiRoutes).forEach((key) => app.use(apiRoutes[key].prefix, apiRoutes[key].routes));
+Object.keys(apiRoutes).forEach((key) => {
+    app.use(apiRoutes[key].prefix, apiRoutes[key].routes);
+});
 
 app.listen(port);

@@ -20,5 +20,5 @@ schema.path('description').validate(function (value) {
 
 module.exports = {
     model: mongoose.model(MODEL, schema),
-    key: MODEL
+    key: MODEL,
 };

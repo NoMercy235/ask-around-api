@@ -40,6 +40,7 @@ questionController.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET].push((query
     query.populate([
         { path: 'categories', select: [ 'name' ] },
         { path: 'score', select: [ 'score' ] },
+        { path: 'replies', select: [ 'user', 'message' ] },
     ]);
 });
 

@@ -13,5 +13,5 @@ const schema = new mongoose.Schema({
 
 module.exports = {
     model: mongoose.model(MODEL, schema),
-    key: MODEL
+    key: MODEL,
 };
