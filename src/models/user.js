@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const MODEL_NAMES = require('./model-names');
 const QUESTION = MODEL_NAMES.question;
 const USER_PREFERENCE = MODEL_NAMES.userPreference;
+const CATEGORY_SEARCH = MODEL_NAMES.categorySearch;
 const MODEL = MODEL_NAMES.user;
 
 const SALT_WORK_FACTOR = 10;
@@ -16,7 +17,8 @@ const schema = new mongoose.Schema({
     isActive: { type: Boolean, default: true },
 
     questions: [{ type: mongoose.Schema.Types.ObjectId, ref: QUESTION }],
-    user_preference: { type: String, ref: USER_PREFERENCE }
+    user_preference: { type: String, ref: USER_PREFERENCE },
+    categorySearches: [{ type: String, ref: CATEGORY_SEARCH }],
 });
 
 schema.pre('save', function (next) {

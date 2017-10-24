@@ -5,4 +5,5 @@ module.exports = {
     questionScore: 'QuestionScore',
     userPreference: 'UserPreference',
     reply: 'Reply',
+    categorySearch: 'CategorySearch',
 };

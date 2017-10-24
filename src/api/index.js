@@ -7,5 +7,6 @@ module.exports = {
         score: { prefix: '/api/score', routes: require('./question/question-scores.routes') },
         userPreference: { prefix: '/api/preference', routes: require('./user/user-preference.routes') },
         reply: { prefix: '/api/replies', routes: require('./question/reply.routes') },
+        categorySearch: { prefix: '/api/categorySearch', routes: require('./user/category-search.routes') },
     }
 };
