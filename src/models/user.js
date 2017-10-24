@@ -3,6 +3,7 @@ const MODEL_NAMES = require('./model-names');
 const QUESTION = MODEL_NAMES.question;
 const USER_PREFERENCE = MODEL_NAMES.userPreference;
 const CATEGORY_SEARCH = MODEL_NAMES.categorySearch;
+const QUERY_SEARCH = MODEL_NAMES.querySearch;
 const MODEL = MODEL_NAMES.user;
 
 const SALT_WORK_FACTOR = 10;
@@ -19,6 +20,7 @@ const schema = new mongoose.Schema({
     questions: [{ type: mongoose.Schema.Types.ObjectId, ref: QUESTION }],
     user_preference: { type: String, ref: USER_PREFERENCE },
     categorySearches: [{ type: String, ref: CATEGORY_SEARCH }],
+    querySearches: [{ type: String, ref: QUERY_SEARCH }],
 });
 
 schema.pre('save', function (next) {

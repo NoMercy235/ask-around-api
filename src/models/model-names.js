@@ -6,4 +6,5 @@ module.exports = {
     userPreference: 'UserPreference',
     reply: 'Reply',
     categorySearch: 'CategorySearch',
+    querySearch: 'QuerySearch',
 };
