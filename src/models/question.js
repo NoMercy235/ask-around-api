@@ -1,4 +1,3 @@
-const moment = require('moment');
 const MODEL_NAMES = require('./model-names');
 const USER = MODEL_NAMES.user;
 const CATEGORY = MODEL_NAMES.category;
@@ -21,6 +20,14 @@ const schema = new mongoose.Schema(
         timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
     }
 );
+
+schema.statics.getAllowedFilters = function () {
+    return ['title', '_creator', 'categories', 'scores', 'created_at'];
+};
+
+schema.statics.getAllowedSort = function () {
+    return ['title', 'scores', 'created_at'];
+};
 
 module.exports = {
     model: mongoose.model(MODEL, schema),

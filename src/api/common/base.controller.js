@@ -1,4 +1,5 @@
 const constants = require('./constants');
+const Filter = require('./filters.controller');
 
 function exists (res, item) {
     if (!item) {
@@ -17,6 +18,7 @@ function initCallbacks () {
 class BaseController {
     constructor (Resource, findByCb) {
         this.Resource = Resource;
+        this.filter = new Filter(this.Resource);
         this.findByCb = findByCb;
         this.callbacks = initCallbacks();
     }
@@ -25,6 +27,8 @@ class BaseController {
         return (req, res) => {
             let query = this.Resource.find({});
             this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET].forEach(cb => cb(query));
+            query = this.filter.applyFilters(req, query);
+            query = this.filter.applySorting(req, query);
             query.exec().then((items) => {
                 this.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_GET].forEach(cb => cb(res, items));
                 res.json(items);
