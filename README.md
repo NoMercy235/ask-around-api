@@ -3,12 +3,12 @@ Ask Around API
 
 This is the first big NodeJS * Express project which will try to replicate the Pyramid API of the Ask Around application.
 
-- Offers JWT / OAuth2 authentication.
-- Real-time communication between users.
-- Real-time update of questions and replies.
-- REST resources as middleware via [resource-router-middleware](https://github.com/developit/resource-router-middleware)
-- CORS support via [cors](https://github.com/troygoode/node-cors)
-- Body Parsing via [body-parser](https://github.com/expressjs/body-parser)
+- [x] Offers JWT authentication with passport.js.
+- [ ] Real-time communication between users.
+- [ ] Real-time update of questions and replies.
+- [x] REST resources as middleware via [resource-router-middleware](https://github.com/developit/resource-router-middleware)
+- [x] CORS support via [cors](https://github.com/troygoode/node-cors)
+- [x] Body Parsing via [body-parser](https://github.com/expressjs/body-parser)
 
 Getting Started
 ---------------
@@ -40,6 +40,9 @@ Create a `config.js` file in the `src` directory with the following template:
 
 Docker Support
 ------
+
+For best experience, you should use the `docker-compose` command.
+
 ```sh
 cd ask-around-api
 
