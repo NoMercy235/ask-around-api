@@ -1,13 +1,14 @@
-let express = require('express');
-let app = express();
-let bodyParser = require('body-parser');
-let morgan = require('morgan');
-let mongoose = require('mongoose');
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const mongoose = require('mongoose');
 
-let config = require('./config');
-let passportConfig = require('./middleware/passport');
+const config = require('./config');
+const passportConfig = require('./middleware/passport');
 
-let port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
 // Overriding the deprecated "Promise" module of mongoose.
 // For more information see: https://github.com/Automattic/mongoose/issues/4291
@@ -18,6 +19,7 @@ mongoose.connect(config.database, { useMongoClient: true, keepAlive: true });
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+app.use(cors());
 app.use(morgan('dev'));
 
 app.use(passportConfig.passport.initialize());
