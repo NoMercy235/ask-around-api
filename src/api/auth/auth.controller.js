@@ -18,9 +18,8 @@ controller.authenticate = (req, res) => {
             });
 
             res.status(constants.HTTP_CODES.OK).json({
-                success: true,
-                message: 'Enjoy your token!',
-                token: token
+                user: user.safeToSend(true),
+                token: token,
             });
         }
     });
@@ -32,7 +31,14 @@ controller.register = (req, res) => {
         if (err) {
             res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
         } else {
-            res.json(user);
+            let token = jwt.sign({ email: user.email }, config.secret, {
+                expiresIn: constants.TOKEN_EXPIRE_TIME,
+            });
+
+            res.status(constants.HTTP_CODES.OK).json({
+                user: user.safeToSend(),
+                token: token,
+            });
         }
     });
 };

@@ -39,6 +39,18 @@ schema.methods.comparePassword = function (candidatePassword) {
     return bcrypt.compareSync(candidatePassword, this.password);
 };
 
+schema.methods.safeToSend = function (withArrays = false) {
+    let result = {};
+    Object.keys(schema.paths).forEach((key) => {
+        if (Array.isArray(this[key]) && !withArrays) return;
+        result[key] = this[key];
+    });
+    delete result.password;
+    delete result._id;
+    delete result.__v;
+    return result;
+};
+
 schema.statics.updateFields = function (fields) {
     // Deleting the password to prevent updating the hash on user update.
     // There will be a separate API call for password update.
