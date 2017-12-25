@@ -38,6 +38,7 @@ questionController.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET_ONE].push((q
 
 questionController.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET].push((query) => {
     query.populate([
+        { path: '_creator', select: [ 'firstName', 'lastName' ] },
         { path: 'categories', select: [ 'name' ] },
         { path: 'score', select: [ 'score' ] },
         { path: 'replies', select: [ 'user', 'message' ] },
