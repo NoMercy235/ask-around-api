@@ -33,7 +33,10 @@ class Filter {
 
     applyPagination(req, query) {
         if (!req.query.pagination) return query;
-        return query.skip(+req.query.pagination.page).limit(+req.query.pagination.limit)
+        const page = +req.query.pagination.page;
+        const limit = +req.query.pagination.limit
+
+        return query.skip(page * limit).limit(limit)
     }
 }
 
