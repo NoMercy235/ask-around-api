@@ -30,6 +30,11 @@ class Filter {
         if (!req.query.sort || this.allowedSort.indexOf(req.query.sort.field) === -1) return query;
         return query.sort({ [req.query.sort.field]: req.query.sort.order });
     }
+
+    applyPagination(req, query) {
+        if (!req.query.pagination) return query;
+        return query.skip(+req.query.pagination.page).limit(+req.query.pagination.limit)
+    }
 }
 
 module.exports = Filter;

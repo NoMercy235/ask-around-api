@@ -29,6 +29,7 @@ class BaseController {
             this.callbacks[constants.HTTP_TIMED_EVENTS.BEFORE_GET].forEach(cb => cb(query));
             query = this.filter.applyFilters(req, query);
             query = this.filter.applySorting(req, query);
+            query = this.filter.applyPagination(req, query);
             query.exec().then((items) => {
                 this.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_GET].forEach(cb => cb(res, items));
                 res.json(items);
