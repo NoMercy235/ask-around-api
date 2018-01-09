@@ -10,19 +10,19 @@
   "author": "Alexandru Florian Barascu <alex.florin235@yahoo.com>",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^1.0.2",
-    "body-parser": "^1.17.2",
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
     "cors": "^2.8.4",
-    "express": "^4.15.4",
+    "express": "^4.16.2",
     "jsonwebtoken": "^7.4.2",
-    "moment": "^2.18.1",
-    "mongoose": "^4.11.7",
-    "morgan": "^1.8.2",
+    "moment": "^2.20.1",
+    "mongoose": "^4.13.9",
+    "morgan": "^1.9.0",
     "passport": "^0.4.0",
-    "passport-jwt": "^3.0.0"
+    "passport-jwt": "^3.0.1"
   },
   "devDependencies": {
-    "eslint": "^4.4.1",
-    "nodemon": "^1.11.0"
+    "eslint": "^4.15.0",
+    "nodemon": "^1.14.10"
   }
 }
