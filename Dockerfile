@@ -1,4 +1,4 @@
-FROM node:slim
+FROM alpine:latest
 
 # File Author / Maintainer
 LABEL authors="Alexandru Florian Barascu <alex.florin235@yahoo.com>"
@@ -6,18 +6,19 @@ MAINTAINER alex.florin235@yahoo.com
 
 ENV PORT=8080
 
-# Set work directory to /www
-WORKDIR /www
+# Install node and npm.
+RUN apk add --update nodejs nodejs-npm
 
-# Install app dependencies
-COPY package.json /www/package.json
-RUN npm install
+# Set work directory to /src
+WORKDIR /src
 
 # Copy app source
-COPY . /www
+COPY . /src
 
-# expose the port to outside world
+# Install app dependencies
+RUN npm install
+
 EXPOSE $PORT
 
-# start command as per package.json
-CMD ["npm", "start"]
+# Start command as per package.json
+ENTRYPOINT ["npm", "start"]

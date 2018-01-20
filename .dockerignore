@@ -1,0 +1,7 @@
+node_modules
+.idea
+.git
+.gitignore
+kill.bat
+Dockerfile-alpine
+docker-compose.yml
