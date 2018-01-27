@@ -14,20 +14,20 @@ questionController.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_CREATE].push((res
     User.findOne({ _id: item._creator }).exec().then((user) => {
         user.questions.push(item);
         user.save().catch((err) => {
-            res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
+            res.status(constants.HTTP_CODES.BAD_REQUEST);
         });
     }).catch((err) => {
-        res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
+        res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR);
     });
 
     item.categories.map((category) => {
         Category.findOne({ _id: category}).exec().then((category) => {
             category.questions.push(item);
             category.save().catch((err) => {
-                res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
+                res.status(constants.HTTP_CODES.BAD_REQUEST);
             });
         }).catch((err) => {
-            res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
+            res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR);
         });
     })
 });

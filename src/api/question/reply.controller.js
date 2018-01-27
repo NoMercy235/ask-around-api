@@ -18,10 +18,10 @@ replyController.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_CREATE].push((res, i
     Question.findOne({ _id: item.question }).exec().then((question) => {
         question.replies.push(item);
         question.save().catch((err) => {
-            res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
+            res.status(constants.HTTP_CODES.BAD_REQUEST);
         });
     }).catch((err) => {
-        res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
+        res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR);
     });
 });
 

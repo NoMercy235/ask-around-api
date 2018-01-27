@@ -23,11 +23,11 @@ userController.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_CREATE].push((res, it
         ignored_keywords: [],
     });
     userPreference.save().catch((err) => {
-        res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
+        res.status(constants.HTTP_CODES.BAD_REQUEST);
     });
     item.user_preference = userPreference._id;
     item.save().catch((err) => {
-        res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
+        res.status(constants.HTTP_CODES.BAD_REQUEST);
     });
 });
 

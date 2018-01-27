@@ -17,10 +17,10 @@ userPreferenceController.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_CREATE].pus
     User.findOne({ _id: item.user }).exec().then((user) => {
         user.user_preference = item;
         user.save().catch((err) => {
-            res.status(constants.HTTP_CODES.BAD_REQUEST).json(err);
+            res.status(constants.HTTP_CODES.BAD_REQUEST);
         });
     }).catch((err) => {
-        res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json(err);
+        res.status(constants.HTTP_CODES.INTERNAL_SERVER_ERROR);
     });
 });
 
