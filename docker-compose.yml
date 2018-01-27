@@ -2,6 +2,7 @@ version: '2'
 
 services:
     ask-around:
+        container_name: ask-around
         build:
             context: .
             dockerfile: Dockerfile
@@ -9,8 +10,13 @@ services:
             - "3000:8080"
         networks:
             - ask-around-network
-    mongodb:
+    mongo-db:
+        container_name: mongo-db
         image: mongo
+        volumes:
+          - ./database:/data/db
+        ports:
+            - "27017:27017"
         networks:
             - ask-around-network
 

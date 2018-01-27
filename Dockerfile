@@ -1,13 +1,10 @@
-FROM alpine:latest
+FROM node:carbon
 
 # File Author / Maintainer
 LABEL authors="Alexandru Florian Barascu <alex.florin235@yahoo.com>"
 MAINTAINER alex.florin235@yahoo.com
 
 ENV PORT=8080
-
-# Install node and npm.
-RUN apk add --update nodejs nodejs-npm
 
 # Set work directory to /src
 WORKDIR /src

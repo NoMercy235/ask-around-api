@@ -5,3 +5,4 @@ node_modules
 kill.bat
 Dockerfile-alpine
 docker-compose.yml
+database
