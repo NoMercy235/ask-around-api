@@ -8,17 +8,23 @@ let config = require('../src/config');
 // Overriding the deprecated "Promise" module of mongoose.
 // For more information see: https://github.com/Automattic/mongoose/issues/4291
 mongoose.Promise = global.Promise;
-mongoose.connect(config.database);
+mongoose.connect(config.database, { useMongoClient: true, keepAlive: false });
 
-let admin = new User({
-    firstName: 'admin',
-    lastName: 'askaround',
-    email: 'admin@askaround.com',
-    password: '123456',
-    isAdmin: true,
-    isActive: true,
+
+User.find({ email: 'admin@askaround.com' }).exec().then((data) => {
+    if (!data || !data.length) {
+        let admin = new User({
+            firstName: 'admin',
+            lastName: 'askaround',
+            email: 'admin@askaround.com',
+            password: '123456',
+            isAdmin: true,
+            isActive: true,
+        });
+        admin.save();
+    }
+    process.exit(0);
 });
-admin.save();
 
 console.log('===================================');
 console.log('            Seed complete          ');
