@@ -42,7 +42,7 @@ schema.methods.comparePassword = function (candidatePassword) {
 schema.methods.safeToSend = function (withArrays = false) {
     let result = {};
     Object.keys(schema.paths).forEach((key) => {
-        if (Array.isArray(this[key]) && !withArrays) return;
+        if (!withArrays && Array.isArray(this[key])) return;
         result[key] = this[key];
     });
     delete result.password;

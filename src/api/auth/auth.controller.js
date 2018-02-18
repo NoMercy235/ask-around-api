@@ -36,7 +36,7 @@ controller.register = (req, res) => {
             });
 
             res.status(constants.HTTP_CODES.OK).json({
-                user: user.safeToSend(),
+                user: user.safeToSend(true),
                 token: token,
             });
         }

@@ -15,7 +15,7 @@ let strategy = new JwtStrategy({
         email: jwt.email
     }, (err, user) => {
         if (user) {
-            next(null, user);
+            next(null, user.safeToSend(true));
         } else {
             next(null, false);
         }
