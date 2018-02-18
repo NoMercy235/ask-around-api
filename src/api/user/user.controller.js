@@ -31,10 +31,15 @@ userController.callbacks[constants.HTTP_TIMED_EVENTS.AFTER_CREATE].push((res, it
     });
 });
 
+function getUserWithToken (req, res) {
+    res.json(req.user);
+}
+
 module.exports = {
     get: userController.get(),
     getOne: userController.getOne(),
     create: userController.create(),
     update: userController.update(),
     remove: userController.remove(),
+    getUserWithToken: getUserWithToken,
 };
