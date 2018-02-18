@@ -46,7 +46,6 @@ schema.methods.safeToSend = function (withArrays = false) {
         result[key] = this[key];
     });
     delete result.password;
-    delete result._id;
     delete result.__v;
     return result;
 };
