@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "eslint": "^4.15.0",
+    "hoek": "^4.2.1",
     "nodemon": "^1.14.10"
   }
 }
