@@ -21,11 +21,20 @@ User.find({ email: 'admin@askaround.com' }).exec().then((data) => {
             isAdmin: true,
             isActive: true,
         });
-        admin.save();
+        console.log('Admin user added successfully');
+        admin.save().then(seedComplete).catch(seedFailed);
     }
-    process.exit(0);
-});
+    seedComplete();
+}).catch(seedFailed);
 
-console.log('===================================');
-console.log('            Seed complete          ');
-console.log('===================================');
+function seedComplete() {
+    console.log('===================================');
+    console.log('            Seed complete          ');
+    console.log('===================================');
+    process.exit(0);
+}
+
+function seedFailed(err) {
+    console.error(err);
+    process.exit(1);
+}
