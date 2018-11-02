@@ -10,7 +10,7 @@
   "author": "Alexandru Florian Barascu <alex.florin235@yahoo.com>",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^1.0.3",
+    "bcrypt": "^3.0.2",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
